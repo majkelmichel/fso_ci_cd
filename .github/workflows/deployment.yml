@@ -26,14 +26,14 @@ jobs:
           heroku_app_name: "fso-ci-cd-majkel"
       - uses: actions/checkout@v2
       - name: Bump version and push tag
-      uses: anothrNick/github-tag-action@1.33.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      if: ${{ !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
+        uses: anothrNick/github-tag-action@1.33.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
       - uses: 8398a7/action-slack@v3
-      with:
-        status: ${{ job.status }}
-        fields: repo, message, commit, author, took, eventName
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      if: always()
+        with:
+          status: ${{ job.status }}
+          fields: repo, message, commit, author, took, eventName
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
