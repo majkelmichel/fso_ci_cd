@@ -8,7 +8,7 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "build": "webpack --mode=production",
     "lint": "eslint .",
-    "test": "echo \"No tests specified\""
+    "test": "echo \"No tests specified. Create tests for this app\""
   },
   "engines": {
     "node": ">=10.15"
