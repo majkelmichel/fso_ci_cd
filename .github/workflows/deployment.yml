@@ -25,12 +25,12 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "fso-ci-cd-majkel"
           heroku_email: "mich.zaw2002@gmail.com"
-      - uses: actions/checkout@v2
-      - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.33.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
+#      - uses: actions/checkout@v2
+#      - name: Bump version and push tag
+#        uses: anothrNick/github-tag-action@1.33.0
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        if: ${{ !contains(join(toJson(github.event.commits.*.message)), '#skip') }}
       - uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
