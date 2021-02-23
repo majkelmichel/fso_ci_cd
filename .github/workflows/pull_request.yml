@@ -1,0 +1,35 @@
+name: Pull request pipeline
+
+on:
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
+
+jobs:
+  check_pr:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+      - name: npm install
+        run: npm install
+      - name: lint
+        run: npm run eslint
+      - name: test
+        run: npm run test
+      - name: e2e tests
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          command: npm run test:e2e
+          start: npm run start-prod
+          wait-on: 'http://localhost:5000'
+      - uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo, message, commit, author, took, eventName
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
